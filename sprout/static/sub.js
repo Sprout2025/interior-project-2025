@@ -133,28 +133,7 @@ function toggleWishlist(event, productId) {
 }
 
 // ================================
-// 초기 로딩 시 숨김 (URL 파라미터 존재 시)
-// ================================
-(function () {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (
-      urlParams.has('page') ||
-      urlParams.has('style') ||
-      urlParams.has('brand') ||
-      urlParams.has('sort') ||
-      urlParams.has('search')
-    ) {
-      document.documentElement.classList.add('loading-scroll');
-      document.body.classList.add('loading-scroll');
-    }
-  } catch (e) {
-    console.warn('loading-scroll init error:', e);
-  }
-})();
-
-// ================================
-// DOM 로드 후 섹션으로 즉시 스크롤
+// 즉시 스크롤 위치 설정 (페이지 로드 전)
 // ================================
 (function () {
   const urlParams = new URLSearchParams(window.location.search);
@@ -165,30 +144,51 @@ function toggleWishlist(event, productId) {
     urlParams.has('sort') ||
     urlParams.has('search')
   ) {
-    window.addEventListener('DOMContentLoaded', function () {
+    // smooth scroll 비활성화
+    const style = document.createElement('style');
+    style.id = 'disable-smooth-scroll';
+    style.textContent = `
+      html, body {
+        scroll-behavior: auto !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // 페이지 로드 전에 스크롤 복원 방지
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    // 즉시 최상단으로
+    window.scrollTo(0, 0);
+
+    // 화면 숨김
+    document.documentElement.classList.add('loading-scroll');
+    document.body.classList.add('loading-scroll');
+
+    // DOM 준비되면 즉시 이동
+    document.addEventListener('DOMContentLoaded', function () {
       const section_cb = document.querySelector('.section_cb');
       const header = document.querySelector('header') || document.querySelector('nav');
 
       if (section_cb) {
-        const headerHeight = header ? header.offsetHeight : 80; // 기본 80px
-        const sectionPosition = section_cb.getBoundingClientRect().top + window.pageYOffset;
+        const headerHeight = header ? header.offsetHeight : 80;
+        const sectionPosition = section_cb.offsetTop;
         const offsetPosition = sectionPosition - headerHeight - 20;
 
-        window.scrollTo({
-          top: offsetPosition,
-          // instant: 일부 브라우저 미지원 → 기본 동작으로 즉시 이동
-          behavior: 'auto'
-        });
-
-        setTimeout(function () {
-          document.documentElement.classList.remove('loading-scroll');
-          document.body.classList.remove('loading-scroll');
-        }, 10);
-      } else {
-        // 섹션을 못 찾은 경우에도 숨김 해제
-        document.documentElement.classList.remove('loading-scroll');
-        document.body.classList.remove('loading-scroll');
+        // 즉시 이동
+        window.scrollTo(0, offsetPosition);
       }
+
+      // 화면 표시
+      document.documentElement.classList.remove('loading-scroll');
+      document.body.classList.remove('loading-scroll');
+
+      // smooth scroll 다시 활성화 (필요시)
+      setTimeout(function() {
+        const styleEl = document.getElementById('disable-smooth-scroll');
+        if (styleEl) styleEl.remove();
+      }, 100);
     });
   }
 })();

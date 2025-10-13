@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <!--custom css-->
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <!--pont-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@700;900&display=swap"
+          rel="stylesheet">
     {% block style %}
     {% endblock %}
 
@@ -62,22 +67,31 @@
 <!-- 오른쪽 슬라이드 패널 -->
 <div class="offcanvas offcanvas-end" id="slidePanel" data-bs-scroll="true" data-bs-backdrop="true">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title">메뉴</h5>
+        <h5 class="offcanvas-title">Menu</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-        <ol class="list-unstyled">
-            <li class="col-auto my-4">내 정보</li>
-            <li class="col-auto my-4">제품 목록</li>
-            <li class="col-auto my-4">장바구니</li>
-            <li class="col-auto my-4">AI 챗봇</li>
+        <ol class="list-unstyled row">
+            <li class="col-6 my-2">
+                <a href="/mypage" style="text-decoration: none; color: black;">내 정보</a>
+            </li>
+            <li class="col-6 my-2">
+                <a href="/sub" style="text-decoration: none; color: black;">제품 목록</a>
+            </li>
+            <li class="col-6 my-2">
+                <a href="/mypage" style="text-decoration: none; color: black;">장바구니</a>
+            </li>
+            <li class="col-6 my-2">AI 챗봇
+            </li>
         </ol>
 
-        <hr class="my-4">
-
-        <div class="d-grid gap-2">
-            <button class="btn btn-outline-primary" type="button">로그인</button>
-            <button class="btn btn-outline-secondary" type="button">마이페이지</button>
+        <div class="d-grid gap-2 mt-5">
+            {% if g.user %}
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-dark">로그아웃</a>
+            {% else %}
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-dark">로그인</a>
+            <a href="{{ url_for('auth.signup') }}" class="btn btn-outline-dark">회원가입</a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -87,13 +101,14 @@
 {% endblock %}
 <!--기본 템플릿 안에 삽입될 내용 end-->
 
+
 <!-- footer -->
-<footer class="footer container-fluid" >
+<footer class="footer container-fluid" style="background-color: #000000;">
     <div class="footer-container" style="padding-top: 40px;">
         <div class="footer-top">
             <div class="footer-brand">
                 <div class="logo">
-                    <img src="{{ url_for('static', filename='image/logo_w.svg') }}" alt="gagu logo" class="logo-img" >
+                    <img src="{{ url_for('static', filename='image/logo_w.svg') }}" alt="gagu logo" class="logo-img">
                 </div>
                 <div class="footer-links">
                     <a href="">이용약관</a>
@@ -140,11 +155,11 @@
 
         <div class="footer-bottom">
             <div class="footer-info">
-                사업자 등록번호: 123-12-123456 | 통신판매업신고번호: 제2025-수원인계-1036호 | 상호명: (주)스프라우츠 <br>
+                사업자 등록번호: 123-12-123456 | 통신판매업신고번호: 제2025-수원인계-1036호 | 상호명: (주)GAGU <br>
                 대표이사: 김새싹 | 대표전화: 031-1234-1234 | 경기도 수원시 새싹구 새싹12길 12 그린타워1차 2층
             </div>
             <div class="footer-copyright">
-                © 2025 Sprouts Inc, All Rights Reserved
+                © 2025 GAGU Inc, All Rights Reserved
             </div>
         </div>
     </div>

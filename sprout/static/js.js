@@ -65,7 +65,7 @@ window.addEventListener('scroll', () => {
   const row3 = document.getElementById('row3');
 
   if(row1) row1.style.transform = `translateX(-${scrolled * 0.3}px)`;
-  if(row2) row2.style.transform = `translateX(${scrolled * 0.25}px)`;
+  if(row2) row2.style.transform = `translateX(${scrolled * 0.05}px)`;
   if(row3) row3.style.transform = `translateX(-${scrolled * 0.35}px)`;
 });
 
