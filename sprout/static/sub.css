@@ -28,8 +28,29 @@ body {
 /* section_1 */
 .section_1 {
   height: 565px;
-  margin: 0 auto;
-  background-color: blueviolet;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.section_1 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* GAGU MALL 타이틀 스타일 */
+.gagu-mall-title {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', 'Cormorant Garamond', 'Georgia', serif;
+    text-transform: uppercase;
+    color: #ffffff;
+    opacity: 0.8;
 }
 
 /* section_tb - 양옆 여백 추가 및 배경색 흰색 */
@@ -95,6 +116,17 @@ body {
   margin-bottom: 40px;
   padding: 0;
   background-color: #fff;
+}
+
+/* 제품 카드 링크 스타일 제거 */
+.product-grid a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-grid a:hover {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* 제품 카드 */
@@ -211,28 +243,6 @@ body {
   color: #dc3545 !important;
 }
 
-/* mypage 장바구니 */
-.cart-item {
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-.cart-item:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.cart-item-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-.empty-cart {
-  text-align: center;
-  padding: 4rem 2rem;
-  color: #6c757d;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
 
 /* 검색 결과 없음 영역 */
 .text-center.py-5 {

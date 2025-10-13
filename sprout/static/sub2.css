@@ -22,3 +22,37 @@
     }
 
 
+/* pagination custom */
+.pagination {
+  margin-bottom: 0;
+}
+
+.pagination .page-link {
+  color: #333;
+  border: 1px solid #dee2e6;
+  padding: 8px 16px;
+  margin: 0 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.pagination .page-link:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+  color: #333;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #212529;
+  border-color: #212529;
+  color: white;
+  z-index: 1;
+}
+
+.pagination .page-item.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: white;
+  border-color: #dee2e6;
+}
+
