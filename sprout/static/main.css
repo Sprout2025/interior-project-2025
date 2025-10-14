@@ -45,7 +45,7 @@ body {
     margin: 0 auto;
 }
 
-/* 좌측: 네비게이션 */
+/* light: nav */
 .header-left {
     display: flex;
     align-items: center;
@@ -62,7 +62,7 @@ body {
     white-space: nowrap;
 }
 
-/* 중앙: 로고 */
+/* center: logo */
 .header-center {
     display: flex;
     align-items: center;
@@ -83,7 +83,7 @@ body {
 }
 
 
-/* 우측: 아이콘 메뉴 */
+/* right: icon menu */
 .header-right {
     display: flex;
     align-items: center;
