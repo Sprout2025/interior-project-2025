@@ -47,10 +47,9 @@ body {
 .gagu-mall-title {
     font-size: 3rem;
     font-weight: 700;
-    font-family: 'Playfair Display', 'Cormorant Garamond', 'Georgia', serif;
+    font-family: 'Libre Bodoni', serif;
     text-transform: uppercase;
     color: #ffffff;
-    opacity: 0.8;
 }
 
 /* section_tb - 양옆 여백 추가 및 배경색 흰색 */
@@ -91,7 +90,7 @@ body {
   transform: rotate(180deg);
 }
 
-/* section_2 - 배경을 body까지 확장하고 내부 컨텐츠만 제한 */
+/* section_2 */
 .section_2 {
   width: 100%;
   background-color: #fff;
@@ -99,7 +98,7 @@ body {
   flex: 1;
 }
 
-/* 제품 그리드 컨테이너 - 더 넓은 여백 */
+/* 제품 그리드 컨테이너 */
 .section_2 .container-fluid {
   max-width: 1400px;
   margin: 0 auto;
@@ -107,7 +106,7 @@ body {
   background-color: #fff;
 }
 
-/* 제품 그리드 - 5x5 레이아웃 고정, 간격 넓힘 */
+/* 제품 그리드 5x5 */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

@@ -7,7 +7,7 @@
 {% block content %}
 <body style="background-color: #000000">
 <!-- section_1 -->
-<div id="carouselExampleDark" class="carousel carousel-dark slide container-fluid">
+<div id="carouselExampleDark" class="carousel carousel slide container-fluid">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
                 aria-current="true" aria-label="Slide 1"></button>
@@ -65,9 +65,9 @@
             시안을 통해 인테리어 시공과 가구 구매 과정의 모든 어려움을 해결합니다. 스프라우트와 함께 오늘부로 완전히 새로운 내 공간을 만나보세요.
         </p>
         <div class="text-center mt-4">
-           <a href="{{ url_for('product.sub') }}" class="btn btn-light px-4 py-2">
-               <i class="bi bi-cart3 me-1"></i>구매하기
-           </a>
+        <a href="{{ url_for('product.sub') }}" class="btn btn-light px-4 py-2 opacity-80" >
+        제품보기
+        </a>
         </div>
     </div>
 </div>
@@ -109,28 +109,54 @@
     <div class="parallax-section">
         <div class="image-row" id="row1">
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/interior_1.png') }}" alt="After" class="before-image">
-
+                <img src="{{ url_for('static', filename='image/interior_1.png') }}" alt="After">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/interior_1.png') }}"
-                     alt="Kitchen 1">
+                <img src="{{ url_for('static', filename='image/interior_1.png') }}" alt="Kitchen 1">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu1.jpg') }}"
-                     alt="Bedroom 1">
+                <img src="{{ url_for('static', filename='image/gagu1.jpg') }}" alt="Bedroom 1">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu2.jpg') }}"
-                     alt="Dining 1">
+                <img src="{{ url_for('static', filename='image/gagu2.jpg') }}" alt="Dining 1">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu3.jpg') }}"
-                     alt="Office 1">
+                <img src="{{ url_for('static', filename='image/gagu3.jpg') }}" alt="Office 1">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu4.jpg') }}"
-                     alt="Bathroom 1">
+                <img src="{{ url_for('static', filename='image/gagu4.jpg') }}" alt="Bathroom 1">
+            </div>
+            <!-- 추가 이미지들 -->
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/interior_1.png') }}" alt="After">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/interior_1.png') }}" alt="Kitchen 1">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu1.jpg') }}" alt="Bedroom 1">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu2.jpg') }}" alt="Dining 1">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu3.jpg') }}" alt="Office 1">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu4.jpg') }}" alt="Bathroom 1">
+            </div>
+            <!-- 3번째 반복 -->
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/interior_1.png') }}" alt="After">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/interior_1.png') }}" alt="Kitchen 1">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu1.jpg') }}" alt="Bedroom 1">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu2.jpg') }}" alt="Dining 1">
             </div>
         </div>
     </div>
@@ -139,30 +165,55 @@
     <div class="parallax-section">
         <div class="image-row" id="row2">
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu5.jpg') }}"
-                     alt="Living Room 2">
+                <img src="{{ url_for('static', filename='image/gagu5.jpg') }}" alt="Living Room 2">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu6.jpg') }}"
-                     alt="Kitchen 2">
+                <img src="{{ url_for('static', filename='image/gagu6.jpg') }}" alt="Kitchen 2">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu7.jpg') }}"
-                     alt="Bedroom 2">
+                <img src="{{ url_for('static', filename='image/gagu7.jpg') }}" alt="Bedroom 2">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu8.jpg') }}"
-                     alt="Dining 2">
+                <img src="{{ url_for('static', filename='image/gagu8.jpg') }}" alt="Dining 2">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu9.jpg') }}"
-                     alt="Office 2">
+                <img src="{{ url_for('static', filename='image/gagu9.jpg') }}" alt="Office 2">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu10.jpg') }}"
-                     alt="Bathroom 2">
+                <img src="{{ url_for('static', filename='image/gagu10.jpg') }}" alt="Bathroom 2">
             </div>
-
+            <!-- 추가 이미지들 -->
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu5.jpg') }}" alt="Living Room 2">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu6.jpg') }}" alt="Kitchen 2">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu7.jpg') }}" alt="Bedroom 2">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu8.jpg') }}" alt="Dining 2">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu9.jpg') }}" alt="Office 2">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu10.jpg') }}" alt="Bathroom 2">
+            </div>
+            <!-- 3번째 반복 -->
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu5.jpg') }}" alt="Living Room 2">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu6.jpg') }}" alt="Kitchen 2">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu7.jpg') }}" alt="Bedroom 2">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu8.jpg') }}" alt="Dining 2">
+            </div>
         </div>
     </div>
 
@@ -170,28 +221,54 @@
     <div class="parallax-section">
         <div class="image-row" id="row3">
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu11.jpg') }}"
-                     alt="Living Room 3">
+                <img src="{{ url_for('static', filename='image/gagu11.jpg') }}" alt="Living Room 3">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu12.jpg') }}"
-                     alt="Kitchen 3">
+                <img src="{{ url_for('static', filename='image/gagu12.jpg') }}" alt="Kitchen 3">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu13.jpg') }}"
-                     alt="Bedroom 3">
+                <img src="{{ url_for('static', filename='image/gagu13.jpg') }}" alt="Bedroom 3">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu14.jpg') }}"
-                     alt="Dining 3">
+                <img src="{{ url_for('static', filename='image/gagu14.jpg') }}" alt="Dining 3">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu15.jpg') }}"
-                     alt="Office 3">
+                <img src="{{ url_for('static', filename='image/gagu15.jpg') }}" alt="Office 3">
             </div>
             <div class="image-card">
-                <img src="{{ url_for('static', filename='image/gagu10.jpg') }}"
-                     alt="Bathroom 3">
+                <img src="{{ url_for('static', filename='image/gagu10.jpg') }}" alt="Bathroom 3">
+            </div>
+            <!-- 추가 이미지들 -->
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu11.jpg') }}" alt="Living Room 3">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu12.jpg') }}" alt="Kitchen 3">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu13.jpg') }}" alt="Bedroom 3">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu14.jpg') }}" alt="Dining 3">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu15.jpg') }}" alt="Office 3">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu10.jpg') }}" alt="Bathroom 3">
+            </div>
+            <!-- 3번째 반복 -->
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu11.jpg') }}" alt="Living Room 3">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu12.jpg') }}" alt="Kitchen 3">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu13.jpg') }}" alt="Bedroom 3">
+            </div>
+            <div class="image-card">
+                <img src="{{ url_for('static', filename='image/gagu14.jpg') }}" alt="Dining 3">
             </div>
         </div>
     </div>

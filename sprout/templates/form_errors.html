@@ -1,7 +1,7 @@
 <!--필드 오류-->
 {{ form.csrf_token }}
 
-<!--flash 메시지 start-->
+<!--flash massage start-->
 {% for category, message in get_flashed_messages(with_categories=true) %}
     {% if category == 'success' %}
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -23,9 +23,9 @@
     </div>
     {% endif %}
 {% endfor %}
-<!--flash 메시지 end-->
+<!--flash massage end-->
 
-<!--폼 필드 오류표시 start-->
+<!--form error start-->
 {% if form.errors %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong><i class="bi bi-exclamation-triangle-fill me-2"></i>입력 오류</strong>
@@ -42,4 +42,4 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 {% endif %}
-<!--폼 필드 오류표시 end-->
+<!--form error end-->

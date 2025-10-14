@@ -117,7 +117,7 @@ def sub():
     )
 
 
-# ========== 장바구니 기능 ==========
+# ========== DB 장바구니 기능 ==========
 @bp.route('/cart/add', methods=['POST'])
 def cart_add():
     if not session.get('user_id'):
@@ -137,7 +137,7 @@ def cart_add():
     existing = CartItem.query.filter_by(user_id=g.user.id, product_id=product_id).first()
 
     if existing:
-        print(f"  ℹ️  이미 장바구니에 존재함")
+        print(f"이미 장바구니에 존재함")
         return jsonify({'success': True, 'message': 'Already in cart'})
 
     # Product 테이블에서 상품 정보 조회
@@ -150,7 +150,7 @@ def cart_add():
     # CartItem 생성 시 상품 정보 + username 함께 저장
     new_item = CartItem(
         user_id=g.user.id,
-        username=g.user.username,  # ✨ 추가: 사용자 이름 저장
+        username=g.user.username,
         product_id=product_id,
         brand=product.brand,
         name=product.name,
@@ -194,7 +194,7 @@ def cart_remove():
         print(f"  ✅ 장바구니에서 삭제 완료")
         return jsonify({'success': True, 'message': 'Removed from cart'})
 
-    print(f"  ⚠️  삭제할 아이템을 찾을 수 없음")
+    print(f"삭제할 아이템을 찾을 수 없음")
     return jsonify({'success': False, 'message': 'Item not found'}), 404
 
 

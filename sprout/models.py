@@ -50,7 +50,7 @@ class CartItem(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
-    username = db.Column(db.String(150))  # ✨ 추가: 사용자 이름 저장
+    username = db.Column(db.String(150))
     product_id = db.Column(db.Integer, nullable=False)
 
     # 상품 정보 컬럼 (스냅샷 방식)

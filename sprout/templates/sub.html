@@ -12,7 +12,7 @@
     <img src="{{ url_for('static', filename='image/main_3.png') }}"
          alt="slider1">
     <div class="carousel-caption text-white" style="top: 50%; transform: translateY(-50%);">
-        <h1 class="gagu-mall-title">GAGU MALL</h1>
+        <h1 class="gagu-mall-title" style="font-family: 'Libre Bodoni', serif;">GAGU MALL</h1>
     </div>
 </div>
 
@@ -280,28 +280,36 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a
-                                        class="dropdown-item {% if current_sort == 'default' or not current_sort %}active{% endif %}"
-                                        href="?{% if request.args.get('search') %}search={{ request.args.get('search') }}&{% endif %}{% for style in selected_styles %}style={{ style }}&{% endfor %}{% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=default"
-                                >인기순</a>
+                                <a class="dropdown-item {% if current_sort == 'default' or not current_sort %}active{% endif %}"
+                                   href="?{% if request.args.get('search')
+                                   %}search={{ request.args.get('search') }}
+                                   &{% endif %}{% for style in selected_styles %}
+                                   style={{ style }}&{% endfor %}
+                                   {% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=default">인기순</a>
                             </li>
                             <li>
-                                <a
-                                        class="dropdown-item {% if current_sort == 'price_low' %}active{% endif %}"
-                                        href="?{% if request.args.get('search') %}search={{ request.args.get('search') }}&{% endif %}{% for style in selected_styles %}style={{ style }}&{% endfor %}{% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=price_low"
-                                >낮은가격순</a>
+                                <a class="dropdown-item {% if current_sort == 'price_low' %}active{% endif %}"
+                                   href="?{% if request.args.get('search')
+                                    %}search={{ request.args.get('search') }}
+                                    &{% endif %}{% for style in selected_styles %}
+                                    style={{ style }}&{% endfor %}
+                                    {% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=price_low">낮은가격순</a>
                             </li>
                             <li>
-                                <a
-                                        class="dropdown-item {% if current_sort == 'price_high' %}active{% endif %}"
-                                        href="?{% if request.args.get('search') %}search={{ request.args.get('search') }}&{% endif %}{% for style in selected_styles %}style={{ style }}&{% endfor %}{% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=price_high"
-                                >높은가격순</a>
+                                <a class="dropdown-item {% if current_sort == 'price_high' %}active{% endif %}"
+                                   href="?{% if request.args.get('search')
+                                    %}search={{ request.args.get('search') }}
+                                    &{% endif %}{% for style in selected_styles %}
+                                    style={{ style }}&{% endfor %}{% for brand in selected_brands %}
+                                    brand={{ brand }}&{% endfor %}sort=price_high">높은가격순</a>
                             </li>
                             <li>
-                                <a
-                                        class="dropdown-item {% if current_sort == 'new' %}active{% endif %}"
-                                        href="?{% if request.args.get('search') %}search={{ request.args.get('search') }}&{% endif %}{% for style in selected_styles %}style={{ style }}&{% endfor %}{% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=new"
-                                >신상품순</a>
+                                <a class="dropdown-item {% if current_sort == 'new' %}active{% endif %}"
+                                   href="?{% if request.args.get('search')
+                                   %}search={{ request.args.get('search') }}
+                                   &{% endif %}{% for style in selected_styles %}
+                                   style={{ style }}&{% endfor %}
+                                   {% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=new">신상품순</a>
                             </li>
                         </ul>
                     </div>
@@ -320,10 +328,12 @@
             {% for style in selected_styles %}
             <span class="badge bg-secondary d-flex align-items-center gap-1 px-3 py-2">
               {{ style }}
-              <a
-                      href="?search={{ request.args.get('search', '') }}{% for s in selected_styles if s != style %}&style={{ s }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
-                      class="text-white text-decoration-none ms-1"
-                      style="cursor: pointer;"
+              <a href="?search={{ request.args.get('search', '') }}
+              {% for s in selected_styles if s != style %}&style={{ s }}{% endfor %}
+              {% for b in selected_brands %}&brand={{ b }}{% endfor %}
+              {% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
+              class="text-white text-decoration-none ms-1"
+              style="cursor: pointer;"
               ><i class="bi bi-x"></i></a>
             </span>
             {% endfor %}
@@ -331,18 +341,18 @@
             {% for brand in selected_brands %}
             <span class="badge bg-primary d-flex align-items-center gap-1 px-3 py-2">
               {{ brand }}
-              <a
-                      href="?search={{ request.args.get('search', '') }}{% for s in selected_styles %}&style={{ s }}{% endfor %}{% for b in selected_brands if b != brand %}&brand={{ b }}{% endfor %}{% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
-                      class="text-white text-decoration-none ms-1"
-                      style="cursor: pointer;"
-              ><i class="bi bi-x"></i></a>
+              <a href="?search={{ request.args.get('search', '') }}
+              {% for s in selected_styles %}&style={{ s }}{% endfor %}
+              {% for b in selected_brands if b != brand %}&brand={{ b }}{% endfor %}
+              {% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
+              class="text-white text-decoration-none ms-1"
+              style="cursor: pointer;">
+              <i class="bi bi-x"></i></a>
             </span>
             {% endfor %}
 
-            <a
-                    href="?search={{ request.args.get('search', '') }}{% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
-                    class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1"
-            >
+            <a href="?search={{ request.args.get('search', '') }}{% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
+                    class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
                 <i class="bi bi-x-circle"></i> 초기화
             </a>
         </div>

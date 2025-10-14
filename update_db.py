@@ -8,7 +8,7 @@ app = create_app()
 
 # Flask 앱 컨텍스트 시작
 with app.app_context():
-    print("📦 데이터베이스 업데이트 중...\n")
+    print("데이터베이스 업데이트 중...\n")
 
     # --- user 테이블 컬럼 추가 ---
     try:
@@ -17,7 +17,7 @@ with app.app_context():
             conn.commit()
         print("✅ phone 컬럼 추가 완료")
     except Exception as e:
-        print("ℹ️  phone 컬럼은 이미 존재합니다")
+        print("phone 컬럼은 이미 존재합니다")
 
     try:
         with db.engine.connect() as conn:
@@ -25,13 +25,13 @@ with app.app_context():
             conn.commit()
         print("✅ address 컬럼 추가 완료")
     except Exception as e:
-        print("ℹ️  address 컬럼은 이미 존재합니다")
+        print("address 컬럼은 이미 존재합니다")
 
     # --- cart_item 테이블 컬럼 추가 ---
     print("\n🛒 cart_item 테이블 업데이트 중...")
     cart_columns = ['username', 'brand', 'name', 'price', 'description', 'image_url', 'style']
     cart_column_types = {
-        'username': 'VARCHAR(150)',  # ✨ 추가
+        'username': 'VARCHAR(150)',  #추가
         'brand': 'VARCHAR(100)',
         'name': 'VARCHAR(150)',
         'price': 'INTEGER',
@@ -51,12 +51,12 @@ with app.app_context():
                     conn.commit()
                 print(f"✅ cart_item.{col} 컬럼 추가 완료")
             except Exception as e:
-                print(f"⚠️  cart_item.{col} 컬럼 추가 실패: {e}")
+                print(f" cart_item.{col} 컬럼 추가 실패: {e}")
         else:
-            print(f"ℹ️  cart_item.{col} 컬럼은 이미 존재합니다")
+            print(f" cart_item.{col} 컬럼은 이미 존재합니다")
 
-    # ✨ 기존 cart_item 데이터에 username 채우기
-    print("\n👤 기존 장바구니 데이터에 username 업데이트 중...")
+    # 기존 cart_item 데이터에 username 채우기
+    print("\n 기존 장바구니 데이터에 username 업데이트 중...")
     try:
         from sprout.models import CartItem, User
 
@@ -72,7 +72,7 @@ with app.app_context():
         db.session.commit()
         print(f"✅ {updated}개의 장바구니 아이템에 username 업데이트 완료")
     except Exception as e:
-        print(f"⚠️  username 업데이트 중 오류: {e}")
+        print(f" username 업데이트 중 오류: {e}")
 
     # --- product 테이블 생성 및 데이터 삽입 ---
     # models.py에서 Product 모델 import
@@ -80,14 +80,14 @@ with app.app_context():
 
     inspector = inspect(db.engine)
     if 'product' not in inspector.get_table_names():
-        print("\n🆕 'product' 테이블을 새로 생성합니다...")
+        print("\n 'product' 테이블을 새로 생성합니다...")
         db.create_all()
         print("✅ 테이블 생성 완료")
     else:
-        print("\nℹ️  'product' 테이블이 이미 존재합니다")
+        print("\n 'product' 테이블이 이미 존재합니다")
 
     # JSON 파일에서 상품 데이터 읽기
-    print("\n📂 JSON 파일 읽는 중...")
+    print("\n JSON 파일 읽는 중...")
     json_path = os.path.join('data', 'products.json')
 
     if os.path.exists(json_path):
@@ -102,7 +102,7 @@ with app.app_context():
 
         # 1단계: JSON에 있는 상품을 DB에 추가
         print("\n" + "=" * 60)
-        print("📥 [1단계] JSON -> DB 추가")
+        print(" [1단계] JSON -> DB 추가")
         print("=" * 60)
 
         added = 0
@@ -111,7 +111,7 @@ with app.app_context():
             existing = db.session.get(Product, product_id)
 
             if existing:
-                print(f"⏭️  이미 존재: {item.get('name')} (ID: {product_id})")
+                print(f" 이미 존재: {item.get('name')} (ID: {product_id})")
                 continue
 
             product = Product(
@@ -128,11 +128,11 @@ with app.app_context():
             added += 1
 
         db.session.commit()
-        print(f"\n📈 총 {added}개의 상품이 DB에 추가되었습니다.")
+        print(f"\n 총 {added}개의 상품이 DB에 추가되었습니다.")
 
         # 2단계: DB에만 있고 JSON에 없는 상품 삭제
         print("\n" + "=" * 60)
-        print("🗑️  [2단계] DB에서 삭제 (JSON에 없는 상품)")
+        print("[2단계] DB에서 삭제 (JSON에 없는 상품)")
         print("=" * 60)
 
         all_products = Product.query.all()
@@ -149,7 +149,7 @@ with app.app_context():
 
         # 최종 상태 확인
         print("=" * 60)
-        print("📊 최종 DB 상태")
+        print("최종 DB 상태")
         print("=" * 60)
         final_count = Product.query.count()
         print(f"✅ 현재 DB에 저장된 상품 수: {final_count}개")
@@ -158,6 +158,6 @@ with app.app_context():
         print(f"❌ {json_path} 파일을 찾을 수 없습니다. (상품 데이터 추가 생략)")
 
     print("\n" + "=" * 60)
-    print("✨ 모든 DB 업데이트가 완료되었습니다!")
+    print(" 모든 DB 업데이트가 완료되었습니다!")
     print("=" * 60)
-    print("🚀 이제 서버를 실행하세요: flask run\n")
+    print(" 이제 서버를 실행하세요: flask run\n")

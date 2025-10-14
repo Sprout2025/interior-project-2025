@@ -26,7 +26,7 @@
 <!-- header -->
 <div class="header container-fluid">
     <div class="header-wrapper">
-        <!-- 좌측: 네비게이션 (로그인/회원가입) -->
+        <!-- left: navbar -->
         <div class="header-left">
             {% if g.user %}
             <a class="nav-link" href="{{ url_for('auth.logout') }}">{{ g.user.username }} (로그아웃)</a>
@@ -36,14 +36,14 @@
             {% endif %}
         </div>
 
-        <!-- 중앙: 로고 -->
+        <!-- center: logo -->
         <div class="header-center">
             <a href="{{ url_for('main.index') }}" class="logo-link">
                 <img src="{{ url_for('static', filename='image/logo_b.svg') }}" alt="gagu logo" class="logo-img">
             </a>
         </div>
 
-        <!-- 우측: 아이콘 메뉴 -->
+        <!-- right: icon logo  -->
         <div class="header-right">
             <a href="#" class="header-icon">
                 <i class="bi bi-search"></i>
@@ -64,7 +64,7 @@
     </div>
 </div>
 
-<!-- 오른쪽 슬라이드 패널 -->
+<!-- right slide panner -->
 <div class="offcanvas offcanvas-end" id="slidePanel" data-bs-scroll="true" data-bs-backdrop="true">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title">Menu</h5>
