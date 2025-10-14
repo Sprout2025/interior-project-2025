@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, request, g, session, redirect, url_for
-from sprout.models import CartItem
-import json
+from sprout import db
+from sprout.models import CartItem, Product
 import math
-import os
 
 bp = Blueprint('user', __name__, url_prefix='/')
 
@@ -64,6 +63,8 @@ def mypage():
     print(f"마이페이지 장바구니 조회")
     print(f"{'=' * 60}")
     print(f"사용자: {g.user.username} (ID: {g.user.id})")
+    print(f"이메일: {g.user.email}")
+    print(f"전화번호: {g.user.phone}")
     print(f"페이지: {page}")
 
     # DB에서 장바구니 아이템 조회
@@ -75,42 +76,46 @@ def mypage():
         print(f"{'=' * 60}\n")
         return render_template('mypage.html', cart_items=None)
 
-    # JSON 파일에서 제품 데이터 로드
-    json_path = os.path.join('data', 'products.json')
-
-    try:
-        with open(json_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            all_products = data.get('products', [])
-            print(f"JSON 제품: {len(all_products)}개 로드")
-    except Exception as e:
-        print(f"ERROR: {e}")
-        return render_template('mypage.html', cart_items=None)
-
-    if not all_products:
-        print("ERROR: 제품 데이터가 비어있습니다")
-        return render_template('mypage.html', cart_items=None)
-
-    # 제품 ID로 딕셔너리 생성
-    products_dict = {product['id']: product for product in all_products}
-
-    # 장바구니 아이템과 제품 정보 매칭 (사용자 기반)
+    # DB에서 상품 정보 조회 (캐시 또는 Product 테이블)
     items_with_info = []
 
     for cart_item in cart_items_db:
-        product_id = cart_item.product_id
-
-        if product_id in products_dict:
-            product = products_dict[product_id].copy()
-            product['id'] = product_id
-            items_with_info.append(product)
-            print(f"  매칭: {product['name']}")
+        # 방법 1: CartItem의 캐시된 정보 사용 (빠름)
+        if cart_item.name and cart_item.price:
+            item_data = {
+                'id': cart_item.product_id,
+                'brand': cart_item.brand,
+                'name': cart_item.name,
+                'price': cart_item.price,
+                'description': cart_item.description,
+                'image_url': cart_item.image_url,
+                'style': cart_item.style
+            }
+            items_with_info.append(item_data)
+            print(f"  ✅ 캐시 매칭: {item_data['name']}")
         else:
-            print(f"  매칭 실패: Product ID {product_id}")
+            # 방법 2: 캐시가 없으면 Product 테이블에서 조회
+            product = Product.query.get(cart_item.product_id)
+            if product:
+                item_data = {
+                    'id': product.id,
+                    'brand': product.brand,
+                    'name': product.name,
+                    'price': product.price,
+                    'description': product.description,
+                    'image_url': product.image_url,
+                    'style': product.style
+                }
+                items_with_info.append(item_data)
+                print(f"  ✅ DB 매칭: {item_data['name']}")
+            else:
+                print(f"  ❌ 매칭 실패: Product ID {cart_item.product_id} (상품 삭제됨)")
 
     print(f"최종 매칭: {len(items_with_info)}개")
 
     if not items_with_info:
+        print("표시할 장바구니 항목이 없습니다")
+        print(f"{'=' * 60}\n")
         return render_template('mypage.html', cart_items=None)
 
     # 3개의 이미지 이상 페이지네이션
