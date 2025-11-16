@@ -18,7 +18,8 @@
         <div>• DB/통합 구조 설계</div>
         <div>• UI·UX/문서 정리</div>
       </div>
-      <div style="margin-top:20px;">
+      <div style="margin-top:10px;">
+      <br>
         <a href="https://github.com/jangy00" target="_blank">
           <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub Link"/>
         </a>
@@ -34,7 +35,8 @@
         <div>• 제품 페이지 개발</div>
         <div>• 카테고리 로직 구현</div>
       </div>
-      <div style="margin-top:20px;">
+      <div style="margin-top:10px;">
+      <br>
         <a href="https://github.com/SJM-source" target="_blank">
           <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub Link"/>
         </a>
@@ -50,7 +52,8 @@
         <div>• 로그인·회원가입 구현 </div>
         <div>• 폼 구조 / 유효성 검증</div>
       </div>
-      <div style="margin-top:20px;">
+      <div style="margin-top:10px;">
+      <br>
         <a href="https://github.com/lhj8-8" target="_blank">
           <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub Link"/>
         </a>
@@ -66,7 +69,8 @@
         <div>• 메뉴 슬라이더 제작</div>
         <div>• 프론트 비주얼 세팅</div>
       </div>
-      <div style="margin-top:20px;">
+      <div style="margin-top:10px;">
+      <br>
         <a href="https://github.com/sunghee3682899-commits" target="_blank">
           <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub Link"/>
         </a>
