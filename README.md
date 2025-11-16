@@ -16,7 +16,7 @@
       <div style="font-size:13px; margin-top:6px;">
         <div>• 프로젝트 총괄 </div>
         <div>• DB/통합 구조 설계</div>
-        <div>• UI·UX 총괄 / 문서 정리</div>
+        <div>• UI·UX/문서 정리</div>
       </div>
       <div style="margin-top:8px;">
         <a href="https://github.com/jangy00" target="_blank">
