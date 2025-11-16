@@ -14,7 +14,7 @@
       <b>김장유</b><br/>
       Team Leader
       <div style="font-size:13px; margin-top:6px;">
-        <div>• 프로젝트 총괄 및 프로세스 관리</div>
+        <div>• 프로젝트 총괄 </div>
         <div>• DB 설계 / 통합 구조 설계</div>
         <div>• UI·UX 총괄 / 문서 정리</div>
       </div>
@@ -30,8 +30,8 @@
       <b>송정민</b><br/>
       Full-Stack Developer
       <div style="font-size:13px; margin-top:6px;">
-        <div>• 프론트엔드 및 데이터 로직 구현</div>
-        <div>• JSON 기반 제품 페이지 개발</div>
+        <div>• 데이터 로직 구현</div>
+        <div>• 제품 페이지 개발</div>
         <div>• 카테고리 로직 구현</div>
       </div>
       <div style="margin-top:8px;">
@@ -46,7 +46,7 @@
       <b>이혜지</b><br/>
       Full-Stack Developer
       <div style="font-size:13px; margin-top:6px;">
-        <div>• 메인 및 제품 상세 페이지 UI 담당</div>
+        <div>• 상세 페이지 구현</div>
         <div>• 로그인·회원가입 로직 구현</div>
         <div>• 폼 구조 / 유효성 검증</div>
       </div>
@@ -62,7 +62,7 @@
       <b>전성희</b><br/>
       Front-end Developer
       <div style="font-size:13px; margin-top:6px;">
-        <div>• 메인 인터페이스 및 비주얼 구성 담당</div>
+        <div>• 메인 인터페이스 UI </div>
         <div>• 메뉴 슬라이더 제작</div>
         <div>• 프론트 비주얼 세팅</div>
       </div>
