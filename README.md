@@ -15,7 +15,7 @@
       Team Leader
       <div style="font-size:13px; margin-top:6px;">
         <div>• 프로젝트 총괄 </div>
-        <div>• DB 설계 / 통합 구조 설계</div>
+        <div>• DB/통합 구조 설계</div>
         <div>• UI·UX 총괄 / 문서 정리</div>
       </div>
       <div style="margin-top:8px;">
@@ -47,7 +47,7 @@
       Full-Stack Developer
       <div style="font-size:13px; margin-top:6px;">
         <div>• 상세 페이지 구현</div>
-        <div>• 로그인·회원가입 로직 구현</div>
+        <div>• 로그인·회원가입 구현</div>
         <div>• 폼 구조 / 유효성 검증</div>
       </div>
       <div style="margin-top:8px;">
