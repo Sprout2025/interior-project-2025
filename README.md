@@ -13,12 +13,12 @@
       <img src="https://github.com/jangy00.png" alt="jangy00 avatar" width="100" style="border-radius:12px"/><br/>
       <b>김장유</b><br/>
       Team Leader
-      <div style="font-size:13px; margin-top:6px;">
+      <div style="font-size:12px; margin-top:6px;">
         <div>• 프로젝트 총괄 </div>
         <div>• DB/통합 구조 설계</div>
         <div>• UI·UX/문서 정리</div>
       </div>
-      <div style="margin-top:8px;">
+      <div style="margin-top:20px;">
         <a href="https://github.com/jangy00" target="_blank">
           <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub Link"/>
         </a>
@@ -29,12 +29,12 @@
       <img src="https://github.com/SJM-source.png" alt="SJM-source avatar" width="100" style="border-radius:12px"/><br/>
       <b>송정민</b><br/>
       Full-Stack
-      <div style="font-size:13px; margin-top:6px;">
+      <div style="font-size:12px; margin-top:6px;">
         <div>• 데이터 로직 구현</div>
         <div>• 제품 페이지 개발</div>
         <div>• 카테고리 로직 구현</div>
       </div>
-      <div style="margin-top:8px;">
+      <div style="margin-top:20px;">
         <a href="https://github.com/SJM-source" target="_blank">
           <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub Link"/>
         </a>
@@ -45,12 +45,12 @@
       <img src="https://github.com/lhj8-8.png" alt="lhj8-8 avatar" width="100" style="border-radius:12px"/><br/>
       <b>이혜지</b><br/>
       Full-Stack
-      <div style="font-size:13px; margin-top:6px;">
+      <div style="font-size:12px; margin-top:6px;">
         <div>• 상세 페이지 구현</div>
-        <div>• 로그인·회원가입 구현</div>
+        <div>• 로그인·회원가입 구현 </div>
         <div>• 폼 구조 / 유효성 검증</div>
       </div>
-      <div style="margin-top:8px;">
+      <div style="margin-top:20px;">
         <a href="https://github.com/lhj8-8" target="_blank">
           <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub Link"/>
         </a>
@@ -61,12 +61,12 @@
       <img src="https://github.com/sunghee3682899-commits.png" alt="sunghee3682899-commits avatar" width="100" style="border-radius:12px"/><br/>
       <b>전성희</b><br/>
       Front-end
-      <div style="font-size:13px; margin-top:6px;">
+      <div style="font-size:12px; margin-top:6px;">
         <div>• 메인 인터페이스 UI </div>
         <div>• 메뉴 슬라이더 제작</div>
         <div>• 프론트 비주얼 세팅</div>
       </div>
-      <div style="margin-top:8px;">
+      <div style="margin-top:20px;">
         <a href="https://github.com/sunghee3682899-commits" target="_blank">
           <img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white" alt="GitHub Link"/>
         </a>
