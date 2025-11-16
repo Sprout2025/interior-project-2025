@@ -14,6 +14,7 @@ bp = Blueprint('auth', __name__, url_prefix='/')
 def signup():
     form = UserCreateForm()
     if request.method == 'POST' and form.validate_on_submit():
+
         # 사용자명 중복 체크
         existing_username = User.query.filter_by(username=form.username.data).first()
         if existing_username:
@@ -66,18 +67,24 @@ def login():
             else:
                 return redirect(url_for('main.index'))
         else:
-            flash(errormsg)
+            flash(errormsg, 'danger')
     return render_template('auth/login.html', form=form)
 
 
 # 라우팅 함수보다 먼저 실행하는 함수
 @bp.before_app_request
 def load_logged_in_user():
+    # 정적 파일(static) 요청은 무시
+    if request.path.startswith('/static/'):
+        return
+
     user_id = session.get('user_id')
     if user_id is None:
         g.user = None
     else:
         g.user = User.query.get(user_id)
+        if g.user:
+            print(f"✓ 사용자 로드됨: {g.user.username} (ID: {g.user.id})")
 
 
 # 로그아웃
@@ -88,6 +95,7 @@ def logout():
 
 
 # login_required 데코레이터 함수
+# 데코레이터(decorator) - 로그인 한 사용자만 접근
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(*args, **kwargs):

@@ -36,26 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setPct(50);
   }
 
-  // section_3 video
-  const video = document.querySelector('.section_3 video');
-  if (video) {
-    // 비디오가 자동 재생되도록 재생
-    video.play().catch(err => console.log('Video autoplay failed:', err));
-
-    // 마우스를 올렸을 때 소리 켜기
-    video.addEventListener('mouseenter', function() {
-      video.muted = false;
-      video.play(); // 재생 확인
-    });
-
-    // 마우스를 뗐을 때 다시 음소거
-    video.addEventListener('mouseleave', function() {
-      video.muted = true;
-    });
-  }
-});
-
-// 메인 스크롤 이벤트 리스너
+  // 메인 스크롤 이벤트 리스너 (sub slider)
 window.addEventListener('scroll', () => {
   const scrolled = window.pageYOffset;
 
@@ -80,7 +61,7 @@ window.addEventListener('load', () => {
   if(row3) row3.style.transform = 'translateX(0px)';
 });
 
-/* 헤더 스크롤 효과 */
+// 헤더 스크롤 효과
 window.addEventListener('scroll', function() {
   const header = document.querySelector('.header');
   if (header) {
@@ -91,3 +72,23 @@ window.addEventListener('scroll', function() {
     }
   }
 });
+
+  // section_3 video
+  const video = document.querySelector('.section_3 video');
+  if (video) {
+    // 비디오 자동 재생
+    video.play().catch(err => console.log('Video autoplay failed:', err));
+
+    // HOVER 할때 소리 켜기
+    video.addEventListener('mouseenter', function() {
+      video.muted = false;
+      video.play(); // 재생 확인
+    });
+
+    // HOVER CANCEL 할때 음소거
+    video.addEventListener('mouseleave', function() {
+      video.muted = true;
+    });
+  }
+});
+

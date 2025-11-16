@@ -13,11 +13,11 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     phone = db.Column(db.String(20), nullable=True)
-    address = db.Column(db.String(300), nullable=True)  # 배송지
+    address = db.Column(db.String(300), nullable=True)
     created_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
-    # 관계: user.cart_items로 장바구니 조회 가능
-    cart_items = db.relationship('CartItem', backref='user', lazy=True, cascade="all, delete-orphan")
+    # 관계: user.cart로 장바구니 조회 가능 (1:1 관계)
+    cart = db.relationship('Cart', backref='user', uselist=False, lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -33,7 +33,6 @@ class Product(db.Model):
     brand = db.Column(db.String(100))
     name = db.Column(db.String(150), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.Text)
     image_url = db.Column(db.String(255))
     style = db.Column(db.String(50))
     created_date = db.Column(db.DateTime, default=datetime.now)
@@ -43,13 +42,31 @@ class Product(db.Model):
 
 
 # ===============================
-# 장바구니 모델 (CartItem)
+# 장바구니 모델 (Cart)
+# ===============================
+class Cart(db.Model):
+    __tablename__ = 'cart'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False, unique=True)
+    username = db.Column(db.String(150))  # 사용자명 저장 (스냅샷)
+    created_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+
+    # 관계: cart.items로 장바구니 아이템 조회 가능
+    items = db.relationship('CartItem', backref='cart', lazy=True, cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return f'<Cart user={self.username}>'
+
+
+# ===============================
+# 장바구니 아이템 모델 (CartItem)
 # ===============================
 class CartItem(db.Model):
     __tablename__ = 'cart_item'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id', ondelete='CASCADE'), nullable=False)
     username = db.Column(db.String(150))
     product_id = db.Column(db.Integer, nullable=False)
 
@@ -57,7 +74,6 @@ class CartItem(db.Model):
     brand = db.Column(db.String(100))
     name = db.Column(db.String(200))
     price = db.Column(db.Integer)
-    description = db.Column(db.Text)
     image_url = db.Column(db.String(255))
     style = db.Column(db.String(50))
     created_date = db.Column(db.DateTime, nullable=False, default=datetime.now)

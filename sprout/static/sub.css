@@ -1,19 +1,22 @@
-/* header */
 .header {
-  height: 70px;
-  position: fixed !important;
-  top: 0; left: 0; right: 0;
-  backdrop-filter: blur(10px);
-  color: yellowgreen;
-  z-index: 1000;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(5px);
+    background-color: transparent;
+    z-index: 1000;
+    padding: 0 80px;
+    transition: background-color 0.3s ease;
 }
+
+.header.scrolled {
+    background-color: rgba(245, 235, 220, 0.9);
+}
+
 .header:hover {
-  height: 70px;
-  position: fixed !important;
-  top: 0; left: 0; right: 0;
-  transition: all 0.8s ease;
-  background-color: azure;
-  color: deeppink;
+    background-color: rgba(245, 235, 220, 0.9);
 }
 
 /* Body 전체 레이아웃 */

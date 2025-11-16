@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, g, session, redirect, url_for
 from sprout import db
-from sprout.models import CartItem, Product
+from sprout.models import Cart, CartItem, Product
 import math
 
 bp = Blueprint('user', __name__, url_prefix='/')
@@ -67,8 +67,18 @@ def mypage():
     print(f"전화번호: {g.user.phone}")
     print(f"페이지: {page}")
 
-    # DB에서 장바구니 아이템 조회
-    cart_items_db = CartItem.query.filter_by(user_id=g.user.id).order_by(CartItem.created_date.desc()).all()
+    # 1. 사용자의 Cart 조회
+    cart = Cart.query.filter_by(user_id=g.user.id).first()
+
+    if not cart:
+        print("Cart가 없습니다")
+        print(f"{'=' * 60}\n")
+        return render_template('mypage.html', cart_items=None)
+
+    print(f"Cart ID: {cart.id}")
+
+    # 2. Cart의 CartItem 조회
+    cart_items_db = CartItem.query.filter_by(cart_id=cart.id).order_by(CartItem.created_date.desc()).all()
     print(f"DB 장바구니 아이템: {len(cart_items_db)}개")
 
     if not cart_items_db:
@@ -76,25 +86,24 @@ def mypage():
         print(f"{'=' * 60}\n")
         return render_template('mypage.html', cart_items=None)
 
-    # DB에서 상품 정보 조회 (캐시 또는 Product 테이블)
+    # 3. CartItem에서 상품 정보 추출 (스냅샷)
     items_with_info = []
 
     for cart_item in cart_items_db:
-        # 방법 1: CartItem의 캐시된 정보 사용 (빠름)
+        # CartItem의 캐시된 정보 사용 (빠름)
         if cart_item.name and cart_item.price:
             item_data = {
                 'id': cart_item.product_id,
                 'brand': cart_item.brand,
                 'name': cart_item.name,
                 'price': cart_item.price,
-                'description': cart_item.description,
                 'image_url': cart_item.image_url,
                 'style': cart_item.style
             }
             items_with_info.append(item_data)
-            print(f"  ✅ 캐시 매칭: {item_data['name']}")
+            print(f"  캐시 매칭: {item_data['name']}")
         else:
-            # 방법 2: 캐시가 없으면 Product 테이블에서 조회
+            # 캐시가 없으면 Product 테이블에서 조회
             product = Product.query.get(cart_item.product_id)
             if product:
                 item_data = {
@@ -102,7 +111,6 @@ def mypage():
                     'brand': product.brand,
                     'name': product.name,
                     'price': product.price,
-                    'description': product.description,
                     'image_url': product.image_url,
                     'style': product.style
                 }
@@ -118,7 +126,7 @@ def mypage():
         print(f"{'=' * 60}\n")
         return render_template('mypage.html', cart_items=None)
 
-    # 3개의 이미지 이상 페이지네이션
+    # 4. 페이지네이션
     total = len(items_with_info)
     start = (page - 1) * per_page
     end = start + per_page

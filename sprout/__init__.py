@@ -1,4 +1,4 @@
-from flask import Flask, g, session
+from flask import Flask, g, session, current_app
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
@@ -13,12 +13,12 @@ def create_app():
     app.config.from_object(config)
     app.config['SECRET_KEY'] = '4565656246565'
 
-    # 세션 쿠키 설정 추가 (중요!)
+    # 세션 쿠키 설정 추가 (보안 강화)
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
     app.config['PERMANENT_SESSION_LIFETIME'] = 3600  # 1시간
 
-    # ORM
+    # ORM 설정
     db.init_app(app)
     migrate.init_app(app, db)
     from . import models
@@ -39,9 +39,13 @@ def create_app():
         else:
             from .models import User
             g.user = User.query.get(user_id)
+
             if g.user:
-                print(f"✓ 사용자 로드됨: {g.user.username} (ID: {g.user.id})")
+                # 디버그 모드에서만 사용자 로드 메시지 출력
+                if app.debug:
+                    print(f"✓ 사용자 로드됨: {g.user.username} (ID: {g.user.id})")
             else:
-                print(f"⚠ User ID {user_id}를 찾을 수 없음")
+                if app.debug:
+                    print(f"⚠ User ID {user_id}를 찾을 수 없음")
 
     return app

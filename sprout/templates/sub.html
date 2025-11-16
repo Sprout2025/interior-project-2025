@@ -281,35 +281,19 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item {% if current_sort == 'default' or not current_sort %}active{% endif %}"
-                                   href="?{% if request.args.get('search')
-                                   %}search={{ request.args.get('search') }}
-                                   &{% endif %}{% for style in selected_styles %}
-                                   style={{ style }}&{% endfor %}
-                                   {% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=default">인기순</a>
+                                   href="?{% if request.args.get('search') %}search={{ request.args.get('search') }}&{% endif %}{% for style in selected_styles %}style={{ style }}&{% endfor %}{% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=default">인기순</a>
                             </li>
                             <li>
                                 <a class="dropdown-item {% if current_sort == 'price_low' %}active{% endif %}"
-                                   href="?{% if request.args.get('search')
-                                    %}search={{ request.args.get('search') }}
-                                    &{% endif %}{% for style in selected_styles %}
-                                    style={{ style }}&{% endfor %}
-                                    {% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=price_low">낮은가격순</a>
+                                   href="?{% if request.args.get('search') %}search={{ request.args.get('search') }}&{% endif %}{% for style in selected_styles %}style={{ style }}&{% endfor %}{% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=price_low">낮은가격순</a>
                             </li>
                             <li>
                                 <a class="dropdown-item {% if current_sort == 'price_high' %}active{% endif %}"
-                                   href="?{% if request.args.get('search')
-                                    %}search={{ request.args.get('search') }}
-                                    &{% endif %}{% for style in selected_styles %}
-                                    style={{ style }}&{% endfor %}{% for brand in selected_brands %}
-                                    brand={{ brand }}&{% endfor %}sort=price_high">높은가격순</a>
+                                   href="?{% if request.args.get('search') %}search={{ request.args.get('search') }}&{% endif %}{% for style in selected_styles %}style={{ style }}&{% endfor %}{% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=price_high">높은가격순</a>
                             </li>
                             <li>
                                 <a class="dropdown-item {% if current_sort == 'new' %}active{% endif %}"
-                                   href="?{% if request.args.get('search')
-                                   %}search={{ request.args.get('search') }}
-                                   &{% endif %}{% for style in selected_styles %}
-                                   style={{ style }}&{% endfor %}
-                                   {% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=new">신상품순</a>
+                                   href="?{% if request.args.get('search') %}search={{ request.args.get('search') }}&{% endif %}{% for style in selected_styles %}style={{ style }}&{% endfor %}{% for brand in selected_brands %}brand={{ brand }}&{% endfor %}sort=new">신상품순</a>
                             </li>
                         </ul>
                     </div>
@@ -332,8 +316,8 @@
               {% for s in selected_styles if s != style %}&style={{ s }}{% endfor %}
               {% for b in selected_brands %}&brand={{ b }}{% endfor %}
               {% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
-              class="text-white text-decoration-none ms-1"
-              style="cursor: pointer;"
+                 class="text-white text-decoration-none ms-1"
+                 style="cursor: pointer;"
               ><i class="bi bi-x"></i></a>
             </span>
             {% endfor %}
@@ -345,14 +329,14 @@
               {% for s in selected_styles %}&style={{ s }}{% endfor %}
               {% for b in selected_brands if b != brand %}&brand={{ b }}{% endfor %}
               {% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
-              class="text-white text-decoration-none ms-1"
-              style="cursor: pointer;">
+                 class="text-white text-decoration-none ms-1"
+                 style="cursor: pointer;">
               <i class="bi bi-x"></i></a>
             </span>
             {% endfor %}
 
             <a href="?search={{ request.args.get('search', '') }}{% if current_sort and current_sort != 'default' %}&sort={{ current_sort }}{% endif %}"
-                    class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+               class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
                 <i class="bi bi-x-circle"></i> 초기화
             </a>
         </div>

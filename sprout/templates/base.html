@@ -21,7 +21,7 @@
     <title>Interior web</title>
 </head>
 
-<body>
+<body {% block body_class %}{% endblock %}>
 
 <!-- header -->
 <div class="header container-fluid">
@@ -54,7 +54,7 @@
             <a href="#" class="header-icon">
                 <i class="bi bi-heart"></i>
             </a>
-            <a href="#" class="header-icon">
+            <a href="/mypage" class="header-icon">
                 <i class="bi bi-person"></i>
             </a>
             <a href="#" class="header-icon" data-bs-toggle="offcanvas" data-bs-target="#slidePanel">

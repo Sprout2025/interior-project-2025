@@ -1,4 +1,72 @@
-// sub 제품 찜 로직 (서버 API 연동)
+// sub 제품 및 찜 로직 (서버 API 연동)
+
+// 로그인 필요 시 처리
+function requireLoginRedirect() {
+  alert('로그인이 필요합니다.');
+  window.location.href = '/login/?next=' + encodeURIComponent(window.location.pathname);
+}
+
+// fetch 응답 공통 처리 (401 + JSON 파싱)
+function handleAuthAndJson(response) {
+  if (response.status === 401) {
+    requireLoginRedirect();
+    return null;
+  }
+  return response.json();
+}
+
+// 응답 데이터 내 redirect 플래그 공통 처리
+function handleRedirectFlag(data) {
+  if (data && data.redirect) {
+    requireLoginRedirect();
+    return true;
+  }
+  return false;
+}
+
+// 하트 아이콘 UI 업데이트
+function setHeartFilled(heartIcon, filled) {
+  if (!heartIcon) return;
+
+  if (filled) {
+    heartIcon.classList.remove('bi-heart');
+    heartIcon.classList.add('bi-heart-fill');
+    heartIcon.style.color = '#dc3545';
+  } else {
+    heartIcon.classList.remove('bi-heart-fill');
+    heartIcon.classList.add('bi-heart');
+    heartIcon.style.color = '#333';
+  }
+}
+
+// 토스트 메시지
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'position-fixed bottom-0 end-0 p-3';
+  toast.style.zIndex = '9999';
+  toast.innerHTML = `
+    <div class="toast show" role="alert">
+      <div class="toast-body bg-dark text-white rounded">
+        ${message}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2000);
+}
+
+// 체크박스 필터 리셋
+function resetCheckboxFilter(formSelector, dropdownId) {
+  document
+    .querySelectorAll(`${formSelector} input[type="checkbox"]`)
+    .forEach(cb => (cb.checked = false));
+
+  const dropdownTrigger = document.getElementById(dropdownId);
+  if (!dropdownTrigger) return;
+
+  const dropdownInstance = bootstrap.Dropdown.getInstance(dropdownTrigger);
+  if (dropdownInstance) dropdownInstance.hide();
+}
 
 // 카테고리 토글 버튼
 document.addEventListener('DOMContentLoaded', function () {
@@ -28,9 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
           const heartBtn = document.querySelector(`button[data-product-id="${productId}"]`);
           if (heartBtn) {
             const heartIcon = heartBtn.querySelector('i');
-            heartIcon.classList.remove('bi-heart');
-            heartIcon.classList.add('bi-heart-fill');
-            heartIcon.style.color = '#dc3545';
+            // 하트 상태 공통 함수 사용
+            setHeartFilled(heartIcon, true);
           }
         });
       }
@@ -42,98 +109,69 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 장바구니 토글 함수
 function toggleWishlist(event, productId) {
-    event.preventDefault();
-    event.stopPropagation();
+  event.preventDefault();
+  event.stopPropagation();
 
-    const button = event.currentTarget;
-    const heartIcon = button.querySelector('i');
-    const isFilled = heartIcon.classList.contains('bi-heart-fill');
+  const button = event.currentTarget;
+  const heartIcon = button.querySelector('i');
+  const isFilled = heartIcon.classList.contains('bi-heart-fill');
 
-    if (isFilled) {
-        // 장바구니에서 제거
-        fetch('/cart/remove', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ product_id: productId })
-        })
-        .then(response => {
-            if (response.status === 401) {
-                alert('로그인이 필요합니다.');
-                window.location.href = '/login/?next=' + encodeURIComponent(window.location.pathname);
-                return null;
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data && data.success) {
-                heartIcon.classList.remove('bi-heart-fill');
-                heartIcon.classList.add('bi-heart');
-                heartIcon.style.color = '#333';
-            } else if (data && data.redirect) {
-                alert('로그인이 필요합니다.');
-                window.location.href = '/login/?next=' + encodeURIComponent(window.location.pathname);
-            } else if (data) {
-                alert('삭제에 실패했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('오류:', error);
-            alert('오류가 발생했습니다.');
-        });
-    } else {
-        // 장바구니에 추가
-        fetch('/cart/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ product_id: productId })
-        })
-        .then(response => {
-            if (response.status === 401) {
-                alert('로그인이 필요합니다.');
-                window.location.href = '/login/?next=' + encodeURIComponent(window.location.pathname);
-                return null;
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data && data.success) {
-                heartIcon.classList.remove('bi-heart');
-                heartIcon.classList.add('bi-heart-fill');
-                heartIcon.style.color = '#dc3545';
+  if (isFilled) {
+    // 장바구니에서 제거
+    fetch('/cart/remove', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ product_id: productId })
+    })
+      .then(handleAuthAndJson)
+      .then(data => {
+        if (!data) return;
 
-                // 알림 메시지
-                const toast = document.createElement('div');
-                toast.className = 'position-fixed bottom-0 end-0 p-3';
-                toast.style.zIndex = '9999';
-                toast.innerHTML = `
-                    <div class="toast show" role="alert">
-                        <div class="toast-body bg-dark text-white rounded">
-                            장바구니에 추가되었습니다!
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 2000);
-            } else if (data && data.redirect) {
-                alert('로그인이 필요합니다.');
-                window.location.href = '/login/?next=' + encodeURIComponent(window.location.pathname);
-            } else if (data) {
-                alert('추가에 실패했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('오류:', error);
-            alert('오류가 발생했습니다.');
-        });
-    }
+        if (handleRedirectFlag(data)) return;
+
+        if (data.success) {
+          setHeartFilled(heartIcon, false);
+        } else {
+          alert('삭제에 실패했습니다.');
+        }
+      })
+      .catch(error => {
+        console.error('오류:', error);
+        alert('오류가 발생했습니다.');
+      });
+  } else {
+    // 장바구니에 추가
+    fetch('/cart/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ product_id: productId })
+    })
+      .then(handleAuthAndJson)
+      .then(data => {
+        if (!data) return;
+
+        if (handleRedirectFlag(data)) return;
+
+        if (data.success) {
+          setHeartFilled(heartIcon, true);
+          showToast('장바구니에 추가되었습니다!');
+        } else {
+          alert('추가에 실패했습니다.');
+        }
+      })
+      .catch(error => {
+        console.error('오류:', error);
+        alert('오류가 발생했습니다.');
+      });
+  }
 }
 
 // ================================
-// 즉시 스크롤 위치 설정 (페이지 로드 전)
+// 스크롤 위치 설정 (페이지 로드 전)
 // ================================
 (function () {
   const urlParams = new URLSearchParams(window.location.search);
@@ -166,7 +204,7 @@ function toggleWishlist(event, productId) {
     document.documentElement.classList.add('loading-scroll');
     document.body.classList.add('loading-scroll');
 
-    // DOM 준비되면 즉시 이동
+    // DOM 준비되면 앵커 위치로 즉시 이동
     document.addEventListener('DOMContentLoaded', function () {
       const section_cb = document.querySelector('.section_cb');
       const header = document.querySelector('header') || document.querySelector('nav');
@@ -176,8 +214,8 @@ function toggleWishlist(event, productId) {
         const sectionPosition = section_cb.offsetTop;
         const offsetPosition = sectionPosition - headerHeight - 20;
 
-        // 즉시 이동
-        window.scrollTo(0, offsetPosition);
+      // 즉시 이동
+      window.scrollTo(0, offsetPosition);
       }
 
       // 화면 표시
@@ -197,13 +235,9 @@ function toggleWishlist(event, productId) {
 // 필터 리셋 버튼
 // ================================
 window.resetStyleFilter = function () {
-  document.querySelectorAll('#styleFilterForm input[type="checkbox"]').forEach(cb => (cb.checked = false));
-  const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('styleDropdown'));
-  if (dropdown) dropdown.hide();
+  resetCheckboxFilter('#styleFilterForm', 'styleDropdown');
 };
 
 window.resetBrandFilter = function () {
-  document.querySelectorAll('#brandFilterForm input[type="checkbox"]').forEach(cb => (cb.checked = false));
-  const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('brandDropdown'));
-  if (dropdown) dropdown.hide();
+  resetCheckboxFilter('#brandFilterForm', 'brandDropdown');
 };

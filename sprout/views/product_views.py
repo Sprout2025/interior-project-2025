@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, g, session
 from sprout import db
-from sprout.models import CartItem, Product
+from sprout.models import Cart, CartItem, Product
 import json
 import math
 
@@ -117,7 +117,7 @@ def sub():
     )
 
 
-# ========== DB 장바구니 기능 ==========
+# ========== 장바구니 추가 (Cart + CartItem) ==========
 @bp.route('/cart/add', methods=['POST'])
 def cart_add():
     if not session.get('user_id'):
@@ -133,36 +133,45 @@ def cart_add():
     if not product_id:
         return jsonify({'success': False, 'message': 'Product ID is required'}), 400
 
-    # 이미 장바구니에 있는지 확인
-    existing = CartItem.query.filter_by(user_id=g.user.id, product_id=product_id).first()
+    # 1. 사용자의 Cart가 있는지 확인, 없으면 생성
+    cart = Cart.query.filter_by(user_id=g.user.id).first()
+    if not cart:
+        cart = Cart(user_id=g.user.id, username=g.user.username)
+        db.session.add(cart)
+        db.session.commit()
+        print(f"  ✅ 새 Cart 생성 (ID: {cart.id}, User: {cart.username})")
+
+    # 2. 이미 장바구니에 있는지 확인
+    existing = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
 
     if existing:
-        print(f"이미 장바구니에 존재함")
+        print(f"  ℹ️ 이미 장바구니에 존재함")
         return jsonify({'success': True, 'message': 'Already in cart'})
 
-    # Product 테이블에서 상품 정보 조회
+    # 3. Product 테이블에서 상품 정보 조회
     product = db.session.get(Product, product_id)
 
     if not product:
         print(f"  ❌ 상품을 찾을 수 없음 (Product ID: {product_id})")
         return jsonify({'success': False, 'message': 'Product not found'}), 404
 
-    # CartItem 생성 시 상품 정보 + username 함께 저장
+    # 4. CartItem 생성 시 username + 상품 정보 함께 저장
     new_item = CartItem(
-        user_id=g.user.id,
-        username=g.user.username,
+        cart_id=cart.id,
+        username=g.user.username,  # username 저장
         product_id=product_id,
         brand=product.brand,
         name=product.name,
         price=product.price,
         image_url=product.image_url,
-        style=product.style
+        style=product.style,
     )
     db.session.add(new_item)
     db.session.commit()
 
     print(f"  ✅ 장바구니에 추가 완료")
     print(f"     - CartItem ID: {new_item.id}")
+    print(f"     - Cart ID: {cart.id}")
     print(f"     - 사용자: {new_item.username}")
     print(f"     - 상품명: {new_item.name}")
     print(f"     - 브랜드: {new_item.brand}")
@@ -186,7 +195,14 @@ def cart_remove():
     if not product_id:
         return jsonify({'success': False, 'message': 'Product ID is required'}), 400
 
-    item = CartItem.query.filter_by(user_id=g.user.id, product_id=product_id).first()
+    # 사용자의 Cart 조회
+    cart = Cart.query.filter_by(user_id=g.user.id).first()
+    if not cart:
+        print(f"  ⚠️ Cart가 없음")
+        return jsonify({'success': False, 'message': 'Cart not found'}), 404
+
+    # CartItem 조회 및 삭제
+    item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
 
     if item:
         db.session.delete(item)
@@ -194,7 +210,7 @@ def cart_remove():
         print(f"  ✅ 장바구니에서 삭제 완료")
         return jsonify({'success': True, 'message': 'Removed from cart'})
 
-    print(f"삭제할 아이템을 찾을 수 없음")
+    print(f"  ⚠️ 삭제할 아이템을 찾을 수 없음")
     return jsonify({'success': False, 'message': 'Item not found'}), 404
 
 
@@ -203,7 +219,13 @@ def cart_check():
     if not session.get('user_id'):
         return jsonify({'cart_items': [], 'logged_in': False})
 
-    cart_items = CartItem.query.filter_by(user_id=g.user.id).all()
+    # 사용자의 Cart 조회
+    cart = Cart.query.filter_by(user_id=g.user.id).first()
+    if not cart:
+        return jsonify({'cart_items': [], 'logged_in': True})
+
+    # Cart의 아이템 조회
+    cart_items = CartItem.query.filter_by(cart_id=cart.id).all()
     cart_item_ids = [item.product_id for item in cart_items]
 
     return jsonify({'cart_items': cart_item_ids, 'logged_in': True})
