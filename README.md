@@ -9,7 +9,7 @@
 <table align="center" width="100%">
   <tr>
     <!-- 김장유 -->
-    <td align="center" width="25%">
+    <td align="center" width="240">
       <img src="https://github.com/jangy00.png" alt="jangy00 avatar" width="100" style="border-radius:12px"/><br/>
       <b>김장유</b><br/>
       Team Leader
