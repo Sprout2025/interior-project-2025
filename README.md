@@ -149,15 +149,15 @@ flask run
 
 <details><summary><b> PPT </b></summary>
   
-| ![](sprout/static/image/GAGU_SLIDE.png) | ![](sprout/static/image/GAGU_SLIDE2.png) |
-| :--: | :--: |
-| ![](sprout/static/image/GAGU_SLIDE3.png) | ![](sprout/static/image/GAGU_SLIDE4.png) |
-| ![](sprout/static/image/GAGU_SLIDE5.png) | ![](sprout/static/image/GAGU_SLIDE6.png) |
-| ![](sprout/static/image/GAGU_SLIDE7.png) | ![](sprout/static/image/GAGU_SLIDE8.png) |
-| ![](sprout/static/image/GAGU_SLIDE9.png) | ![](sprout/static/image/GAGU_SLIDE10.png) |
-| ![](sprout/static/image/GAGU_SLIDE11.png) | ![](sprout/static/image/GAGU_SLIDE12.png) |
-| ![](sprout/static/image/GAGU_SLIDE13.png) | ![](sprout/static/image/GAGU_SLIDE14.png) |
-| ![](sprout/static/image/GAGU_SLIDE15.png) |  |
+|   ![](sprout/static/image/GAGU_SLIDE.jpeg)   | ![](sprout/static/image/GAGU_SLIDE2.jpeg) |
+|:-----------------------------------------:| :--: |
+| ![](sprout/static/image/GAGU_SLIDE3.jpeg)  | ![](sprout/static/image/GAGU_SLIDE4.jpeg) |
+| ![](sprout/static/image/GAGU_SLIDE5.jpeg)  | ![](sprout/static/image/GAGU_SLIDE6.jpeg) |
+| ![](sprout/static/image/GAGU_SLIDE7.jpeg)  | ![](sprout/static/image/GAGU_SLIDE8.jpeg) |
+| ![](sprout/static/image/GAGU_SLIDE9.jpeg)  | ![](sprout/static/image/GAGU_SLIDE10.jpeg) |
+| ![](sprout/static/image/GAGU_SLIDE11.jpeg) | ![](sprout/static/image/GAGU_SLIDE12.jpeg) |
+| ![](sprout/static/image/GAGU_SLIDE13.jpeg) | ![](sprout/static/image/GAGU_SLIDE14.jpeg) |
+| ![](sprout/static/image/GAGU_SLIDE15.jpeg) |  |
 
 </details>
 <a id="portfolio"></a>
