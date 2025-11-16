@@ -28,7 +28,7 @@
     <td align="center" width="25%">
       <img src="https://github.com/SJM-source.png" alt="SJM-source avatar" width="100" style="border-radius:12px"/><br/>
       <b>송정민</b><br/>
-      Full-Stack Developer
+      Full-Stack
       <div style="font-size:13px; margin-top:6px;">
         <div>• 데이터 로직 구현</div>
         <div>• 제품 페이지 개발</div>
@@ -44,7 +44,7 @@
     <td align="center" width="25%">
       <img src="https://github.com/lhj8-8.png" alt="lhj8-8 avatar" width="100" style="border-radius:12px"/><br/>
       <b>이혜지</b><br/>
-      Full-Stack Developer
+      Full-Stack
       <div style="font-size:13px; margin-top:6px;">
         <div>• 상세 페이지 구현</div>
         <div>• 로그인·회원가입 구현</div>
@@ -60,7 +60,7 @@
     <td align="center" width="25%">
       <img src="https://github.com/sunghee3682899-commits.png" alt="sunghee3682899-commits avatar" width="100" style="border-radius:12px"/><br/>
       <b>전성희</b><br/>
-      Front-end Developer
+      Front-end
       <div style="font-size:13px; margin-top:6px;">
         <div>• 메인 인터페이스 UI </div>
         <div>• 메뉴 슬라이더 제작</div>
