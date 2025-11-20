@@ -78,5 +78,8 @@ class CartItem(db.Model):
     style = db.Column(db.String(50))
     created_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
+    # 수량 컬럼 추가
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+
     def __repr__(self):
-        return f'<CartItem user={self.username} product={self.name}>'
+        return f'<CartItem user={self.username} product={self.name} quantity={self.quantity}>'
