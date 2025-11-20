@@ -86,11 +86,11 @@ def mypage():
         print(f"{'=' * 60}\n")
         return render_template('mypage.html', cart_items=None)
 
-    # 3. CartItem에서 상품 정보 추출 (스냅샷)
+    # 3. CartItem에서 상품 정보 추출
     items_with_info = []
 
     for cart_item in cart_items_db:
-        # CartItem의 캐시된 정보 사용 (빠름)
+        # CartItem의 캐시된 정보
         if cart_item.name and cart_item.price:
             item_data = {
                 'id': cart_item.product_id,
@@ -98,10 +98,11 @@ def mypage():
                 'name': cart_item.name,
                 'price': cart_item.price,
                 'image_url': cart_item.image_url,
-                'style': cart_item.style
+                'style': cart_item.style,
+                'quantity': cart_item.quantity  # 수량 정보 추가
             }
             items_with_info.append(item_data)
-            print(f"  캐시 매칭: {item_data['name']}")
+            print(f"  캐시 매칭: {item_data['name']} (수량: {item_data['quantity']})")
         else:
             # 캐시가 없으면 Product 테이블에서 조회
             product = Product.query.get(cart_item.product_id)
@@ -112,10 +113,11 @@ def mypage():
                     'name': product.name,
                     'price': product.price,
                     'image_url': product.image_url,
-                    'style': product.style
+                    'style': product.style,
+                    'quantity': cart_item.quantity  # 수량 정보 추가
                 }
                 items_with_info.append(item_data)
-                print(f"  ✅ DB 매칭: {item_data['name']}")
+                print(f"  ✅ DB 매칭: {item_data['name']} (수량: {item_data['quantity']})")
             else:
                 print(f"  ❌ 매칭 실패: Product ID {cart_item.product_id} (상품 삭제됨)")
 
