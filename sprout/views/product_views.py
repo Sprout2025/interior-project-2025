@@ -145,8 +145,15 @@ def cart_add():
     existing = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
 
     if existing:
-        print(f"  ℹ️ 이미 장바구니에 존재함")
-        return jsonify({'success': True, 'message': 'Already in cart'})
+        # 이미 있으면 수량만 증가 (최대 10개)
+        if existing.quantity < 10:
+            existing.quantity += 1
+            db.session.commit()
+            print(f"  ✅ 기존 항목 수량 증가: {existing.quantity}개")
+            return jsonify({'success': True, 'message': 'Quantity increased'})
+        else:
+            print(f"  ⚠️ 최대 수량 도달 (10개)")
+            return jsonify({'success': False, 'message': 'Maximum quantity reached'})
 
     # 3. Product 테이블에서 상품 정보 조회
     product = db.session.get(Product, product_id)
@@ -155,7 +162,7 @@ def cart_add():
         print(f"  ❌ 상품을 찾을 수 없음 (Product ID: {product_id})")
         return jsonify({'success': False, 'message': 'Product not found'}), 404
 
-    # 4. CartItem 생성 시 username + 상품 정보 함께 저장
+    # 4. CartItem 생성 시 username + 상품 정보 함께 저장 (수량 기본값 1)
     new_item = CartItem(
         cart_id=cart.id,
         username=g.user.username,  # username 저장
@@ -165,6 +172,7 @@ def cart_add():
         price=product.price,
         image_url=product.image_url,
         style=product.style,
+        quantity=1  # 수량 기본값
     )
     db.session.add(new_item)
     db.session.commit()
@@ -176,6 +184,7 @@ def cart_add():
     print(f"     - 상품명: {new_item.name}")
     print(f"     - 브랜드: {new_item.brand}")
     print(f"     - 가격: {new_item.price}")
+    print(f"     - 수량: {new_item.quantity}")
 
     return jsonify({'success': True, 'message': 'Added to cart'})
 
@@ -212,6 +221,58 @@ def cart_remove():
 
     print(f"  ⚠️ 삭제할 아이템을 찾을 수 없음")
     return jsonify({'success': False, 'message': 'Item not found'}), 404
+
+
+@bp.route('/cart/update_quantity', methods=['POST'])
+def cart_update_quantity():
+    if not session.get('user_id'):
+        return jsonify({'success': False, 'message': 'Login required', 'redirect': True}), 401
+
+    data = request.get_json()
+    product_id = data.get('product_id')
+    action = data.get('action')  # 'increase' or 'decrease'
+
+    print(f"\n장바구니 수량 변경 요청:")
+    print(f"  - 사용자: {g.user.username} (ID: {g.user.id})")
+    print(f"  - Product ID: {product_id}")
+    print(f"  - Action: {action}")
+
+    if not product_id or not action:
+        return jsonify({'success': False, 'message': 'Product ID and action are required'}), 400
+
+    # 사용자의 Cart 조회
+    cart = Cart.query.filter_by(user_id=g.user.id).first()
+    if not cart:
+        print(f"  ⚠️ Cart가 없음")
+        return jsonify({'success': False, 'message': 'Cart not found'}), 404
+
+    # CartItem 조회
+    item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
+    if not item:
+        print(f"  ⚠️ 아이템을 찾을 수 없음")
+        return jsonify({'success': False, 'message': 'Item not found'}), 404
+
+    # 수량 변경
+    if action == 'increase':
+        if item.quantity < 10:
+            item.quantity += 1
+            print(f"  ✅ 수량 증가: {item.quantity}개")
+        else:
+            print(f"  ⚠️ 최대 수량 도달 (10개)")
+            return jsonify({'success': False, 'message': 'Maximum quantity reached'})
+    elif action == 'decrease':
+        if item.quantity > 1:
+            item.quantity -= 1
+            print(f"  ✅ 수량 감소: {item.quantity}개")
+        else:
+            print(f"  ⚠️ 최소 수량 도달 (1개)")
+            return jsonify({'success': False, 'message': 'Minimum quantity reached'})
+    else:
+        print(f"  ❌ 잘못된 action: {action}")
+        return jsonify({'success': False, 'message': 'Invalid action'}), 400
+
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Quantity updated', 'quantity': item.quantity})
 
 
 @bp.route('/cart/check')
