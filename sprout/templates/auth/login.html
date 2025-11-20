@@ -2,7 +2,6 @@
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
 
-    <body>
     <div class="container-fluid">
         <div class="row min-vh-100">
             <div class="col-md-6 d-flex align-items-center justify-content-center">
@@ -36,11 +35,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <img src="{{ url_for('static', filename='image/login.png') }}" alt="login" class="login-image">
+            <div class="col-md-6 d-flex align-items-center justify-content-center p-0">
+                <img src="{{ url_for('static', filename='image/login.png') }}" alt="login"
+                     class="img-fluid login-image" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
         </div>
     </div>
-    </body>
 
 {% endblock %}
