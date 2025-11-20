@@ -51,8 +51,31 @@
                     <div class="p-3">
                         <p class="text-muted small mb-1">{{ item.brand }}</p>
                         <h6 class="fw-bold mb-2" style="font-size: 0.95rem;">{{ item.name }}</h6>
+
+                        <!-- 수량 조절 바 -->
+                        <div class="quantity-control mb-2">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="small text-muted">수량</span>
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-sm btn-outline-secondary quantity-decrease"
+                                            data-product-id="{{ item.id }}"
+                                            {% if item.quantity <= 1 %}disabled{% endif %}>
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                    <span class="quantity-display mx-2" style="min-width: 30px; text-align: center;">
+                                        {{ item.quantity }}
+                                    </span>
+                                    <button class="btn btn-sm btn-outline-secondary quantity-increase"
+                                            data-product-id="{{ item.id }}"
+                                            {% if item.quantity >= 10 %}disabled{% endif %}>
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">{{ "{:,}".format(item.price) }}원</span>
+                            <span class="fw-bold">{{ "{:,}".format(item.price * item.quantity) }}원</span>
                             <button class="btn btn-link p-0 text-danger" onclick="removeFromCart(event, {{ item.id }})">
                                 <i class="bi bi-heart-fill" style="font-size: 1.2rem;"></i>
                             </button>
