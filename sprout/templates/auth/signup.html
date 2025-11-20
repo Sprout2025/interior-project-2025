@@ -2,7 +2,7 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
 
-<div class="container">
+<div class="container-fluid">
     <div class="row min-vh-100">
         <div class="col-md-6 d-flex align-items-center justify-content-center">
             <div class="login-container w-75">
@@ -44,9 +44,9 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-6" >
+        <div class="col-md-6 d-flex align-items-center justify-content-center p-0">
             <img src="{{ url_for('static', filename='image/detail.jpg') }}" alt="login"
-                 style="width: 1024px; height: 982px;">
+                 class="img-fluid login-image" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
     </div>
 </div>
