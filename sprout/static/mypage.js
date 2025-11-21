@@ -24,7 +24,7 @@ function removeFromCart(event, productId) {
     }
 }
 
-/* 수량 조절 기능 */
+/* 장바구니 수량 조절 기능 */
 document.addEventListener('DOMContentLoaded', function() {
     // 수량 증가
     document.querySelectorAll('.quantity-increase').forEach(button => {
@@ -41,6 +41,30 @@ document.addEventListener('DOMContentLoaded', function() {
             updateQuantity(productId, 'decrease');
         });
     });
+
+    // 최근 본 상품 스크롤 컨테이너에 hover 시 스크롤 활성화
+    const scrollContainer = document.getElementById('viewedProductsScroll');
+    if (scrollContainer) {
+        let isHovering = false;
+
+        scrollContainer.addEventListener('mouseenter', () => {
+            isHovering = true;
+            scrollContainer.style.overflowY = 'auto';
+        });
+
+        scrollContainer.addEventListener('mouseleave', () => {
+            isHovering = false;
+            scrollContainer.style.overflowY = 'hidden';
+        });
+
+        // 스크롤 이벤트로 마우스 휠 제어
+        scrollContainer.addEventListener('wheel', (e) => {
+            if (isHovering) {
+                e.preventDefault();
+                scrollContainer.scrollTop += e.deltaY;
+            }
+        });
+    }
 });
 
 function updateQuantity(productId, action) {
@@ -58,6 +82,27 @@ function updateQuantity(productId, action) {
             location.reload();
         } else {
             alert('수량 변경에 실패했습니다: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('오류:', error);
+        alert('오류가 발생했습니다.');
+    });
+}
+
+/* 최근 본 상품 삭제 기능 */
+function removeViewedProduct(viewedProductId) {
+    fetch('/product/viewed/remove', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ viewed_product_id: viewedProductId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('삭제에 실패했습니다.');
         }
     })
     .catch(error => {
