@@ -178,9 +178,36 @@ with app.app_context():
         print("✅ CartItem 테이블 생성 완료")
 
     # =================================================================
-    # [4단계] 기존 Cart에 username 채우기
+    # [4단계] ViewedProduct 테이블 확인 및 username 컬럼 추가
     # =================================================================
-    print("\n[4단계] 기존 Cart에 username 업데이트")
+    print("\n[4단계] ViewedProduct 테이블 확인 및 업데이트")
+    print("-" * 70)
+
+    if 'viewed_product' not in existing_tables:
+        print("ℹ️  ViewedProduct 테이블이 없습니다. 새로 생성합니다...")
+        db.create_all()
+        print("✅ ViewedProduct 테이블 생성 완료")
+    else:
+        print("✅ ViewedProduct 테이블이 이미 존재합니다")
+
+        # ViewedProduct 테이블에 username 컬럼 추가
+        viewed_product_columns = [col['name'] for col in inspector.get_columns('viewed_product')]
+
+        if 'username' not in viewed_product_columns:
+            try:
+                with db.engine.connect() as conn:
+                    conn.execute(text('ALTER TABLE viewed_product ADD COLUMN username VARCHAR(150)'))
+                    conn.commit()
+                print("✅ ViewedProduct에 username 컬럼 추가 완료")
+            except Exception as e:
+                print(f"⚠️  ViewedProduct username 컬럼 추가 실패: {e}")
+        else:
+            print("ℹ️  ViewedProduct username 컬럼은 이미 존재합니다")
+
+    # =================================================================
+    # [5단계] 기존 Cart에 username 채우기
+    # =================================================================
+    print("\n[5단계] 기존 Cart에 username 업데이트")
     print("-" * 70)
 
     from sprout.models import User, Cart
@@ -201,9 +228,9 @@ with app.app_context():
         print("✅ 모든 Cart에 username이 이미 설정되어 있습니다")
 
     # =================================================================
-    # [5단계] 기존 CartItem에 username 채우기
+    # [6단계] 기존 CartItem에 username 채우기
     # =================================================================
-    print("\n[5단계] 기존 CartItem에 username 업데이트")
+    print("\n[6단계] 기존 CartItem에 username 업데이트")
     print("-" * 70)
 
     from sprout.models import CartItem
@@ -224,9 +251,32 @@ with app.app_context():
         print("✅ 모든 CartItem에 username이 이미 설정되어 있습니다")
 
     # =================================================================
-    # [6단계] Product 테이블 생성 및 데이터 동기화
+    # [7단계] 기존 ViewedProduct에 username 채우기
     # =================================================================
-    print("\n[6단계] Product 테이블 업데이트")
+    print("\n[7단계] 기존 ViewedProduct에 username 업데이트")
+    print("-" * 70)
+
+    from sprout.models import ViewedProduct
+
+    viewed_products_without_username = ViewedProduct.query.filter(ViewedProduct.username == None).all()
+
+    if viewed_products_without_username:
+        updated_count = 0
+        for viewed_product in viewed_products_without_username:
+            user = db.session.get(User, viewed_product.user_id)
+            if user:
+                viewed_product.username = user.username
+                updated_count += 1
+
+        db.session.commit()
+        print(f"✅ {updated_count}개의 ViewedProduct username 업데이트 완료")
+    else:
+        print("✅ 모든 ViewedProduct에 username이 이미 설정되어 있습니다")
+
+    # =================================================================
+    # [8단계] Product 테이블 생성 및 데이터 동기화
+    # =================================================================
+    print("\n[8단계] Product 테이블 업데이트")
     print("-" * 70)
 
     from sprout.models import Product
@@ -293,17 +343,26 @@ with app.app_context():
     print("📊 최종 DB 상태")
     print("=" * 70)
 
-    from sprout.models import User, Cart, CartItem, Product
+    from sprout.models import User, Cart, CartItem, Product, ViewedProduct
 
     user_count = User.query.count()
     cart_count = Cart.query.count()
     cart_item_count = CartItem.query.count()
     product_count = Product.query.count()
 
+    # ViewedProduct count는 try-except로 처리 (컬럼이 없을 수 있음)
+    try:
+        viewed_product_count = ViewedProduct.query.count()
+        print(f"✅ ViewedProduct: {viewed_product_count}개")
+    except Exception as e:
+        print(f"⚠️ ViewedProduct 조회 실패: {e}")
+        viewed_product_count = 0
+
     print(f"\n✅ User: {user_count}명")
     print(f"✅ Cart: {cart_count}개")
     print(f"✅ CartItem: {cart_item_count}개")
     print(f"✅ Product: {product_count}개")
+    print(f"✅ ViewedProduct: {viewed_product_count}개")
 
     # Cart 상세 정보
     if cart_count > 0:
