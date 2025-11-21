@@ -376,7 +376,7 @@
         <!-- 제품 그리드 (5x5) -->
         <div class="product-grid">
             {% for product in product_list.items %}
-            <a href="{{ url_for('product_detail', product_id=product.id) }}">
+            <a href="{{ url_for('product_detail', product_id=product.id) }}" onclick="addToViewedProducts({{ product.id }})">
                 <article class="product-card" data-id="{{ product.id }}">
                     <div class="product-image position-relative">
                         <img
