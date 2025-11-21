@@ -68,6 +68,32 @@ function resetCheckboxFilter(formSelector, dropdownId) {
   if (dropdownInstance) dropdownInstance.hide();
 }
 
+// 최근 본 상품 추가 함수
+function addToViewedProducts(productId) {
+    // 로그인 상태 확인
+    fetch('/cart/check')
+        .then(response => response.json())
+        .then(data => {
+            if (data.logged_in) {
+                // 로그인된 사용자만 최근 본 상품에 추가
+                fetch('/product/viewed', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ product_id: productId })
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        console.log('최근 본 상품에 추가됨:', productId);
+                    }
+                })
+                .catch(error => {
+                    console.error('최근 본 상품 추가 오류:', error);
+                });
+            }
+        });
+}
+
 // 카테고리 토글 버튼
 document.addEventListener('DOMContentLoaded', function () {
   const categoryToggles = document.querySelectorAll('.category-toggle');
