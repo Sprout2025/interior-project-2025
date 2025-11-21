@@ -19,6 +19,9 @@ class User(db.Model):
     # 관계: user.cart로 장바구니 조회 가능 (1:1 관계)
     cart = db.relationship('Cart', backref='user', uselist=False, lazy=True, cascade="all, delete-orphan")
 
+    # 관계: user.viewed_products로 최근 본 상품 조회 가능
+    viewed_products = db.relationship('ViewedProduct', backref='user', lazy=True, cascade="all, delete-orphan")
+
     def __repr__(self):
         return f'<User {self.username}>'
 
@@ -83,3 +86,26 @@ class CartItem(db.Model):
 
     def __repr__(self):
         return f'<CartItem user={self.username} product={self.name} quantity={self.quantity}>'
+
+
+# ===============================
+# 최근 본 상품 모델 (ViewedProduct)
+# ===============================
+class ViewedProduct(db.Model):
+    __tablename__ = 'viewed_product'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    product_id = db.Column(db.Integer, nullable=False)
+
+    # 상품 정보 컬럼 (스냅샷 방식)
+    brand = db.Column(db.String(100))
+    name = db.Column(db.String(200))
+    price = db.Column(db.Integer)
+    image_url = db.Column(db.String(255))
+    style = db.Column(db.String(50))
+    username = db.Column(db.String(150))
+    viewed_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+
+    def __repr__(self):
+        return f'<ViewedProduct user_id={self.user_id} product={self.name}>'
