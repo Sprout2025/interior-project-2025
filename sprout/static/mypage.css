@@ -21,7 +21,118 @@
         border-radius: 8px;
     }
 
-/* 수량 조절 스타일 */
+/* 최근 본 상품 사이드바 */
+.viewed-products-sidebar {
+    position: sticky;
+    top: 150px;
+    height: calc(100vh - 200px);
+}
+
+.viewed-products-container {
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.viewed-products-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 15px;
+    height: 100%;
+    transition: overflow-y 0.3s ease;
+}
+
+.viewed-products-scroll:hover {
+    overflow-y: auto;
+}
+
+.viewed-products-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.viewed-products-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.viewed-products-scroll::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.viewed-products-scroll::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.viewed-item {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s;
+    background-color: white;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.viewed-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.viewed-item-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.viewed-item-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.viewed-remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 10;
+}
+
+.viewed-item:hover .viewed-remove-btn {
+    opacity: 1;
+}
+
+.viewed-remove-btn:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.empty-viewed {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* 장바구니 수량 조절 스타일 */
 .quantity-control {
     padding: 8px 0;
     border-top: 1px solid #f0f0f0;
